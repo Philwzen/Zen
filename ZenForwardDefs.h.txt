@@ -1,0 +1,78 @@
+// Forward definitions of everything as ide dont do it proper!
+// needs to be first thing in Zen.h
+
+/** ZenFileSys.h **/
+bool InitFileSys();
+#if BoardType >= Esp8266 && BoardType < EspEnd // esp8266 only
+ #if FileSys == Spiffs
+    Dir OpenDir(char * fname); //Espiffs sp8266 only Dir handle
+  #elif FileSys == Sdcard
+    File OpenDir(char * fname); 
+  #endif
+#endif
+
+#if FileSys > None
+  File FileOpenWrite(char * fname);
+  File FileOpenRead(char * fname);
+  void FileWriteLine(File file,char * data);
+  void FileClose(File file);
+  bool FileAvailable(File file);
+  bool FileDelete(char * filename);
+  char FileRead(File file);
+  String FileReadLn(File file,int MaxChar);
+  String FileToString(char * fname);
+  void ListDir(char * cwdName);
+ #endif
+
+/** ZenLog.h **/
+void LogIt(String logname,String P1,String P2 ,String P3 ,String P4);
+void PurgeLog(char * filename);
+void ReadLog(char * filename,char * Phone);
+
+/** ZenTimers.h **/
+void SetUpTimers(); /** {Esp/ZenEspTimers.h} {Teensy/ZenTeensyTimers.h} **/
+
+/** ZenTime.h **/
+void ShowTime();
+bool SetDateTime();
+
+/** Zenfunc.h **/
+#if defined GprsPresent // must set in simx00 libraries
+  time_t GprsSetTime(int UseTimeServer);
+#endif
+void FlashLed(int Led,int times,int interval);
+String ToString(char * buff);
+bool IsNumeric(String string);
+String SUnQuote(String data);
+void CUnQuote(char * ibuff);
+//String GetElement(char * ibuff,int index,char * Delim)
+
+/** ZenStatus.h **/
+void ShowStatus(int Stat,bool OnOff,int Count);
+#if BoardType < EspEnd && BoardType >= Esp8266 // its a esp8266
+  void ICACHE_RAM_ATTR ImAlive();
+#elif BoardType < Esp8266 // its a esp32
+  void IRAM_ATTR ImAlive();
+#else  // everything else ?? teensy
+  void ImAlive();
+#endif
+void FatalError(const char* In);
+void FatalError(const char * In,int Led);
+/** {ZenWiFi.h} **/
+#if WiFiType > None
+  void SetupServers();
+  char* WiFiError (int errnum);
+  bool StartAP(char * ssid,char * password);
+  bool NetworkConnect(int Tries);
+  bool NetworkConnected();
+  void WiFiFlashSettings(int mode);
+  void DispMacId ();
+  bool SetupWifi(char* ssid[],char* pass[],int Tries);
+#endif
+
+/** {Esp/ZenEspWiFi.h} **/
+#if WiFiType > None && WiFiType < MkrWiFi101
+  #ifndef NoHttp
+    bool WebSrvBegin();
+  #endif
+#endif

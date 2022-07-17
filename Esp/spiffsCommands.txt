@@ -1,0 +1,47 @@
+File system object (SPIFFS)
+
+begin   SPIFFS.begin()
+This method mounts SPIFFS file system. It must be called before any other FS APIs are used. Returns true if file system was mounted successfully, false otherwise.
+
+format  SPIFFS.format()
+Formats the file system. May be called either before or after calling begin. Returns true if formatting was successful.
+
+open	SPIFFS.open(path, mode)  'w' or 'r'
+Opens a file. path should be an absolute path starting with a slash (e.g. /dir/filename.txt). mode is a string specifying access mode. It can be one of “r”, “w”, “a”, “r+”, “w+”, “a+”. Meaning of these modes is the same as for fopen C function.
+
+Returns File object. To check whether the file was opened successfully, use the boolean operator.
+File f = SPIFFS.open("/samplefile.txt", "w"); if (!f) .....
+
+exists	SPIFFS.exists(path)
+Returns true if a file with given path exists, false otherwise.
+
+openDir	SPIFFS.openDir(path)
+Opens a directory given its absolute path. Returns a Dir object.
+
+remove	SPIFFS.remove(path)
+Deletes the file given its absolute path. Returns true if file was deleted successfully.
+
+rename	SPIFFS.rename(pathFrom, pathTo)
+Renames file from pathFrom to pathTo. Paths must be absolute. Returns true if file was renamed successfully.
+
+info	FSInfo fs_info;	SPIFFS.info(fs_info);
+Fills FSInfo structure with information about the file system. Returns true is successful, false otherwise.
+
+seek	file.seek(offset, mode)
+This function behaves like fseek C function. Depending on the value of mode, it moves current position in a file as follows:
+if mode is SeekSet, position is set to offset bytes from the beginning.
+if mode is SeekCur, current position is moved by offset bytes.
+if mode is SeekEnd, position is set to offset bytes from the end of the file.
+Returns true if position was set successfully.
+
+position	file.position()
+Returns the current position inside the file, in bytes.
+
+size	file.size()
+Returns file size, in bytes.
+
+name	String name = file.name();
+Returns file name, as const char*. Convert it to String for storage.
+
+close	file.close()
+Close the file. No other operations should be performed on File object after close function was called.

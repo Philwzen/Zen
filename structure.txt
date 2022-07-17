@@ -1,0 +1,125 @@
+ZBoards.h
+Zen.h
+	ZenPreProDefs.h
+		<ZenSetBoard.h>
+		<ZenSetWiFi.h>
+		<ZenSetFileSys.h>
+		<ZenSetPins.h>
+		<ZenSetLeds.h>
+	//ZenForwardDefs.h
+	ZBareBones.h
+		ReBootMe()
+		ZenFileSys.h   #FileSys > None  
+			FatalError() FWD
+			{[SPI.h]}
+			{[SD.h]}
+			{[SPIFFS.h]}
+			{[FS.h]}
+			InitFileSys()
+				FataError()
+			OpenDir()
+			CloseDir()
+			FileOpenWrite()
+			FileOpenRead()
+			FileWriteLine()
+			FileClose()
+			FileAvailable()
+			FileDelete()
+			FileRead()
+			FileReadLn()
+				FileAvailable()
+				FileRead();
+			FileToString()
+				FileOpenRead()
+				FileReadLn()
+				FileClose()
+			FileAppend()
+				FileOpenRead()
+				FileDelete()
+				FileOpenWrite()
+				FileReadLn()
+				FileWriteLine()
+				FileClose()
+			ListDir()
+				OpenDir()
+				CloseDir() 
+				FileOpenRead()
+				FileClose()
+			GetCurrentVersion()
+				InitFileSys()
+				FileOpenRead()
+				FileReadLn()
+		Zenfunc.h
+			ShowTime()
+			SetTime()
+				GprsSetTime() #GprsPresent
+			ToString()
+			IsNumeric()
+			SUnQuote()
+			CUnQuote()
+			GetElement()
+		ZenStatus.h
+			ShowStatus()
+			ImAlive()
+			FatalError()
+		ZenTimers.h
+			{Esp/ZenEspTimers.h}
+				SetUpTimers()
+					ImAlive()
+			{Teensy/ZenTeensyTimers.h}
+				SetUpTimers()
+					ImAlive()
+		ZenLog.h
+			Logit()
+				InitFileSys()
+				FileOpenWrite()
+				FatalError()
+				Fileclose()
+			PurgeLog()
+				FileOpenWrite()
+			ReadLog()
+				FileOpenRead()
+				FileReadLn()
+	{ZenWiFi.h} #WiFiType > None
+		{Esp/ZenEspWiFi.h} 
+			WebSrvBegin()
+		WiFIAutoSelect.h
+			add()
+			scanAndconnect()
+		{ZenWebFunc.h}
+			[ArduinoJson.h]
+			ReturnOK()
+			ReturnFail()
+			LoadFile()
+			handleNotFound()
+			handleRoot()
+		SetUpServers()
+		WiFiError()
+		StartAp()
+			SetUpServers()
+		NetworkConnect()
+			SetUpServers()
+		NetWorkConnected()
+		WiFiFlashSettings()
+		DispMacId()
+		SetupWiFi()
+			WiFiFlashSettings()
+			DispMacId()
+			NetWorkConnect()
+			StartAp()
+#include <ZenPBox.h>  
+    #include <ZenBlynk.h>
+	{ZenUpdsrv.h}  not used 
+		[ESP8266httpUpdate.h]
+		GetNewVer()
+		WriteVersion()
+		CheckHttpUpfdateAvailable()
+			GetNewVer()
+	{ZenOta.h}     notused
+		SetupOTA()
+#include "SAMD_AnalogCorrection.h"
+	{ZFastAnalog.h} ?? remove ??
+		analogReadFast()
+#include <ZenTime.h>
+
+	ZenInit()
